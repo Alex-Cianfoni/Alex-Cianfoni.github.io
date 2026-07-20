@@ -1,18 +1,11 @@
-# Art Deco Portfolio
+# Brutalist Portfolio
 
-A static multi-page portfolio website prepared for GitHub Pages.
+A static multi-page Brutalist portfolio prepared for GitHub Pages.
 
-## Main files
+## Publish
 
-- `index.html` — Home
-- `about.html` — About and skills
-- `resume.html` — Resume
-- `portfolio.html` — Projects
-- `lab.html` — Research and development
-- `404.html` — Custom missing-page screen
-- `css/style.css` — Shared styling
-- `js/script.js` — Shared JavaScript
-
-## GitHub Pages publishing
-
-Publish the repository from the `main` branch and the repository root (`/`).
+1. Upload every file and folder to the root of a GitHub repository.
+2. Open **Settings → Pages**.
+3. Select **Deploy from a branch**.
+4. Choose `main` and `/ (root)`.
+5. Save and open the published URL.
