@@ -1,11 +1,7 @@
-# Real Brutalist Portfolio
+# Aquitania-Inspired Portfolio
 
-A monochrome static website built with plain HTML, CSS, and JavaScript.
+A static GitHub Pages portfolio inspired by the first-class interiors of RMS Aquitania: ivory neoclassical paneling, restrained gilt trim, wine-red accents, oak tones, and formal Edwardian symmetry.
 
-## GitHub Pages
+## Publish
 
-1. Upload every file and folder to the repository root.
-2. Go to Settings > Pages.
-3. Choose Deploy from a branch.
-4. Select `main` and `/ (root)`.
-5. Save.
+Upload all files to the root of a GitHub repository, then enable GitHub Pages from the `main` branch and `/ (root)` folder.
