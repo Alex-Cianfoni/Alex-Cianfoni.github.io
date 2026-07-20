@@ -1,10 +1,66 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Brutalist Portfolio | Home</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"><link rel="stylesheet" href="style.css"></head><body>
-<nav><div class="container nav-container"><a class="logo" href="index.html">Portfolio</a><ul class="nav-links"><li><a class="active" href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="resume.html">Resume</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="lab.html">Lab</a></li></ul></div></nav>
-<main><section class="hero"><div class="hero-content"><div class="eyebrow">NO FRILLS / JUST WORK</div><h1>My Portfolio</h1><div class="deco-line"><span class="deco-diamond"></span></div><p>A direct, functional portfolio focused on technical work, experimentation, and clear communication.</p><a class="btn" href="about.html">Discover More</a></div></section>
-<section class="section"><div class="container"><h2 class="section-title">Featured Areas</h2><div class="grid feature-grid">
-<article class="card feature-card"><div class="feature-icon"><i class="fas fa-user"></i></div><h3>About Me</h3><p>A brief introduction to my interests, approach, and technical focus.</p><a href="about.html" aria-label="Open About page">⌄</a></article>
-<article class="card feature-card"><div class="feature-icon"><i class="fas fa-briefcase"></i></div><h3>Selected Work</h3><p>Explore projects that demonstrate design, development, and problem-solving.</p><a href="portfolio.html" aria-label="Open Portfolio page">⌄</a></article>
-<article class="card feature-card"><div class="feature-icon"><i class="fas fa-flask"></i></div><h3>Research Lab</h3><p>See the technologies, experiments, and emerging ideas I am currently exploring.</p><a href="lab.html" aria-label="Open Lab page">⌄</a></article>
-<article class="card feature-card"><div class="feature-icon"><i class="fas fa-envelope"></i></div><h3>Connect With Me</h3><p>Professional links and contact options, shared only where appropriate.</p><a href="#contact" aria-label="Go to contact links">⌄</a></article>
-</div></div></section></main>
-<footer id="contact"><h3>Connect With Me</h3><div class="social-links"><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a><a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a></div><p>&copy; <span id="year"></span> My Brutalist Portfolio. All rights reserved.</p></footer><script src="js/script.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A minimal technology and cybersecurity portfolio.">
+  <title>Portfolio — Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="site-title" href="index.html">Portfolio / 2026</a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="portfolio.html">Work</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="lab.html">Lab</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main" class="page">
+  <section class="hero">
+    <p class="kicker">Technology / Security / Systems</p>
+    <h1>My<br>Portfolio</h1>
+    <p class="hero-copy">A direct record of technical work, experiments, systems, and ongoing research.</p>
+    <div class="actions">
+      <a class="button" href="portfolio.html">View work</a>
+      <a class="button" href="about.html">About</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-heading">Selected areas</h2>
+    <div class="grid-3">
+      <article class="block">
+        <span class="block-number">01</span>
+        <h3>Cybersecurity</h3>
+        <p>Hands-on work with networks, systems, analysis, and defensive tools.</p>
+      </article>
+      <article class="block">
+        <span class="block-number">02</span>
+        <h3>Infrastructure</h3>
+        <p>Home lab systems, virtualization, storage, Linux, and hardware.</p>
+      </article>
+      <article class="block">
+        <span class="block-number">03</span>
+        <h3>Research</h3>
+        <p>Experiments involving automation, machine learning, and security.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="statement">The site keeps the design simple so the work remains the main focus.</p>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner"><span>Built with plain HTML and CSS</span><span>© <span data-year></span></span></div>
+</footer>
+<script src="js/script.js"></script>
+</body>
+</html>
