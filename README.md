@@ -1,18 +1,7 @@
-# Art Deco Portfolio
+# Aquitania-Inspired Portfolio
 
-A static multi-page portfolio website prepared for GitHub Pages.
+A static GitHub Pages portfolio inspired by the first-class interiors of RMS Aquitania: ivory neoclassical paneling, restrained gilt trim, wine-red accents, oak tones, and formal Edwardian symmetry.
 
-## Main files
+## Publish
 
-- `index.html` — Home
-- `about.html` — About and skills
-- `resume.html` — Resume
-- `portfolio.html` — Projects
-- `lab.html` — Research and development
-- `404.html` — Custom missing-page screen
-- `css/style.css` — Shared styling
-- `js/script.js` — Shared JavaScript
-
-## GitHub Pages publishing
-
-Publish the repository from the `main` branch and the repository root (`/`).
+Upload all files to the root of a GitHub repository, then enable GitHub Pages from the `main` branch and `/ (root)` folder.
