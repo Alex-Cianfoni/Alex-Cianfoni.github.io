@@ -99,3 +99,21 @@ assets/resume.pdf
 ```
 
 The Résumé page already includes buttons to view and download this document.
+
+
+## Contact page
+
+The site now includes `contact.html`, and Contact has been added to the navigation
+on every main page.
+
+Before publishing, replace these placeholders in `contact.html`:
+
+- `your-email@example.com`
+- `YOUR-USERNAME`
+- `YOUR-PROFILE`
+
+The résumé buttons expect this file:
+
+```text
+assets/resume.pdf
+```
