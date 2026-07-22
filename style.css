@@ -511,3 +511,298 @@ a:focus { color: var(--wine); }
   .left-heading::before,
   .left-heading::after { display: block; }
 }
+
+
+/* ================================================================
+   DYNAMIC INTERACTION LAYER
+================================================================ */
+
+/* Reading progress */
+.reading-progress {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 200;
+  width: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gilt-light), var(--wine), var(--gilt-light));
+  box-shadow: 0 1px 7px rgba(176, 138, 67, .4);
+  pointer-events: none;
+}
+
+/* Mobile navigation control */
+.menu-toggle {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 11px;
+  color: var(--paper);
+  background: transparent;
+  border: 1px solid var(--gilt-light);
+  font: 700 .95rem "Cormorant Garamond", Georgia, serif;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.menu-toggle-icon,
+.menu-toggle-icon::before,
+.menu-toggle-icon::after {
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: currentColor;
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+.menu-toggle-icon {
+  position: relative;
+}
+
+.menu-toggle-icon::before,
+.menu-toggle-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.menu-toggle-icon::before { top: -6px; }
+.menu-toggle-icon::after { top: 6px; }
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-icon {
+  background: transparent;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* Reveal-on-scroll */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity .75s ease var(--reveal-delay, 0ms),
+    transform .75s cubic-bezier(.2, .65, .25, 1) var(--reveal-delay, 0ms);
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Refined card movement */
+.block {
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease,
+    border-color .3s ease;
+}
+
+.block:hover {
+  transform: translateY(-5px);
+  border-color: var(--wine);
+  box-shadow: 0 16px 34px rgba(47, 27, 18, .13);
+}
+
+/* Project filtering */
+.project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.filter-button {
+  padding: 9px 16px;
+  color: var(--wine-dark);
+  background: var(--paper);
+  border: 1px solid var(--gilt);
+  font: 700 .95rem "Cormorant Garamond", Georgia, serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .2s ease, background .2s ease, transform .2s ease;
+}
+
+.filter-button:hover,
+.filter-button:focus-visible,
+.filter-button.active {
+  color: var(--paper);
+  background: var(--wine-dark);
+  transform: translateY(-2px);
+}
+
+.filter-status {
+  min-height: 1.75em;
+  margin: 0 0 24px;
+  color: var(--oak);
+  text-align: center;
+  font-style: italic;
+}
+
+.project-card {
+  transition:
+    opacity .28s ease,
+    transform .28s ease,
+    box-shadow .3s ease;
+}
+
+.project-card.filter-visible {
+  animation: project-arrive .36s ease both;
+}
+
+@keyframes project-arrive {
+  from { opacity: 0; transform: translateY(12px) scale(.985); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Back-to-top control */
+.back-to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 80;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+  background: var(--wine-dark);
+  border: 1px solid var(--gilt-light);
+  outline: 1px solid var(--wine-dark);
+  outline-offset: 3px;
+  font-size: 1.25rem;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(15px);
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease, background .2s ease;
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  color: var(--wine-dark);
+  background: var(--gilt-light);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Page transitions */
+body {
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+body.page-ready {
+  opacity: 1;
+}
+
+body.page-leaving {
+  opacity: 0;
+}
+
+/* Motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 850px) {
+  .header-inner {
+    grid-template-columns: 1fr auto;
+    text-align: left;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    justify-self: end;
+  }
+
+  .site-nav {
+    grid-column: 1 / -1;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows .3s ease, opacity .25s ease;
+  }
+
+  .site-nav > ul {
+    overflow: hidden;
+    align-content: start;
+  }
+
+  .site-nav.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .site-nav ul {
+    flex-direction: column;
+    gap: 0;
+    padding-top: 8px;
+  }
+
+  .site-nav a {
+    display: block;
+    padding: 10px 0;
+    border-top: 1px solid rgba(213, 189, 122, .25);
+  }
+
+  .no-js .menu-toggle {
+    display: none;
+  }
+
+  .no-js .site-nav {
+    display: block;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 540px) {
+  .menu-toggle-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .back-to-top {
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .project-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filter-button {
+    width: 100%;
+  }
+}

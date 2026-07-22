@@ -1,6 +1,7 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- EDIT HERE: Browser-tab title. -->
@@ -13,7 +14,11 @@
 <header class="site-header">
   <div class="header-inner">
     <a class="site-title" href="index.html">Portfolio · 2026</a>
-    <nav class="site-nav" aria-label="Main navigation">
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">
+      <span class="menu-toggle-text">Menu</span>
+      <span class="menu-toggle-icon" aria-hidden="true"></span>
+    </button>
+    <nav class="site-nav" id="site-navigation" aria-label="Main navigation">
       <ul>
         <li><a href="about.html">About</a></li>
         <li><a href="portfolio.html">Work</a></li>
@@ -33,13 +38,25 @@
 
   <!-- =========================
        PROJECT GRID
-       Copy one complete <article class="block">...</article> section
+       Copy one complete <article class="block project-card" data-category="infrastructure security networking">...</article> section
        and paste it inside .grid-2 to add a project.
   ========================= -->
   <section class="section">
-    <div class="grid-2">
+    <!-- DYNAMIC PROJECT FILTERS:
+         The data-filter values must match words used in data-category below. -->
+    <div class="project-filters" aria-label="Filter projects">
+      <button class="filter-button active" type="button" data-filter="all">All</button>
+      <button class="filter-button" type="button" data-filter="security">Security</button>
+      <button class="filter-button" type="button" data-filter="infrastructure">Infrastructure</button>
+      <button class="filter-button" type="button" data-filter="software">Software</button>
+      <button class="filter-button" type="button" data-filter="hardware">Hardware</button>
+    </div>
+
+    <p class="filter-status" aria-live="polite"></p>
+
+    <div class="grid-2 project-grid">
       <!-- PROJECT 01 -->
-      <article class="block">
+      <article class="block project-card" data-category="security analysis">
         <span class="block-number">PROJECT 01</span>
         <h2>Virtual Network Lab</h2>
         <p>A segmented virtual network using firewalls, NAT, DHCP, routing, and multiple operating systems.</p>
@@ -47,7 +64,7 @@
       </article>
 
       <!-- PROJECT 02 -->
-      <article class="block">
+      <article class="block project-card" data-category="software security cryptography">
         <span class="block-number">PROJECT 02</span>
         <h2>Web Security Testing</h2>
         <p>Security testing using vulnerability scanners, exploitation tools, and intentionally vulnerable systems.</p>
@@ -55,7 +72,7 @@
       </article>
 
       <!-- PROJECT 03 -->
-      <article class="block">
+      <article class="block project-card" data-category="infrastructure servers storage">
         <span class="block-number">PROJECT 03</span>
         <h2>Cryptography Tools</h2>
         <p>Programs and exercises exploring classical ciphers, RSA, AES, number theory, and encryption concepts.</p>
@@ -63,7 +80,7 @@
       </article>
 
       <!-- PROJECT 04 -->
-      <article class="block">
+      <article class="block project-card" data-category="software security encryption">
         <span class="block-number">PROJECT 04</span>
         <h2>Home Server Lab</h2>
         <p>Storage, virtualization, backups, and network services built with repurposed computer hardware.</p>
@@ -71,7 +88,7 @@
       </article>
 
       <!-- PROJECT 05 -->
-      <article class="block">
+      <article class="block project-card" data-category="hardware systems">
         <span class="block-number">PROJECT 05</span>
         <h2>Custom Enigma Simulator</h2>
         <p>A configurable encryption simulator featuring multiple rotors, ring settings, and plugboard options.</p>
@@ -87,7 +104,7 @@
       </article>
 
       <!-- ADD A NEW PROJECT:
-      <article class="block">
+      <article class="block project-card" data-category="software">
         <span class="block-number">PROJECT 07</span>
         <h2>Project Name</h2>
         <p>Describe what you built, what problem it solves, and which tools you used.</p>
@@ -97,6 +114,8 @@
     </div>
   </section>
 </main>
+
+<button class="back-to-top" type="button" aria-label="Back to top">↑</button>
 
 <footer class="site-footer">
   <div class="footer-inner">

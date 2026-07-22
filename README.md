@@ -36,3 +36,26 @@ Do not delete opening or closing HTML tags unless you understand the page struct
 ## GitHub Pages
 
 Publish from the `main` branch and repository root (`/`). Keep `index.html` and `style.css` at the top level of the repository.
+
+
+## Dynamic features
+
+The site now includes browser-based interactions while remaining compatible with GitHub Pages:
+
+- Mobile navigation menu
+- Active page highlighting
+- Scroll-reveal animations
+- Reading-progress bar
+- Project category filters
+- Back-to-top button
+- Smooth page transitions
+- Reduced-motion accessibility support
+
+To change project filters, edit `portfolio.html`. Each project card uses a
+`data-category` attribute, for example:
+
+```html
+<article class="block project-card" data-category="software security">
+```
+
+A card may have more than one category separated by spaces.
