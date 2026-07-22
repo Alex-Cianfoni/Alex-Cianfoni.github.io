@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Source code and development history for a custom Enigma cipher simulator.">
+  <title>Portfolio — Enigma Project</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="site-title" href="index.html">Portfolio · 2026</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">
+      <span class="menu-toggle-text">Menu</span>
+      <span class="menu-toggle-icon" aria-hidden="true"></span>
+    </button>
+    <nav class="site-nav" id="site-navigation" aria-label="Main navigation">
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="portfolio.html">Work</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="lab.html">Lab</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="page">
+  <section class="section">
+    <p class="kicker">Software / Cryptography</p>
+    <h1 class="page-title">Enigma Project</h1>
+  </section>
+
+  <section class="section">
+    <p class="statement">A collection of Python Enigma-machine experiments showing the project’s development from a three-rotor command-line program to GUI versions, corrected stepping logic, a ten-rotor design, and a decoder example.</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-heading">Source files</h2>
+    <div class="code-file-grid">
+      
+      <article class="code-file block">
+        <span class="block-number">VERSION 01</span>
+        <h2>Original 3-Rotor Version</h2>
+        <p class="meta">86 lines · Python</p>
+        <div class="code-actions">
+          <a class="button" href="projects/enigma/enigma-original-3-rotor.py" download>Download file</a>
+          <a class="text-link" href="projects/enigma/enigma-original-3-rotor.py" target="_blank" rel="noopener">Open raw code</a>
+        </div>
+        <details class="code-viewer">
+          <summary>View source code</summary>
+          <pre><code>
+import string
+import random
+
+class Rotor:
+    def __init__(self, wiring, turnover):
+        self.wiring = wiring
+        self.turnover = turnover
+        self.position = 0
+
+    def set_position(self, position):
+        self.position = position % 26
+
+    def forward(self, char):
+        index = (ord(char) - ord(&#x27;A&#x27;) + self.position) % 26
+        return self.wiring[index]
+
+    def backward(self, char):
+        index = (self.wiring.index(char) - self.position + 26) % 26
+        return chr(index + ord(&#x27;A&#x27;))
+
+    def rotate(self):
+        self.position = (self.position + 1) % 26
+        return self.position == ord(self.turnover) - ord(&#x27;A&#x27;)
+
+class Reflector:
+    def __init__(self, wiring):
+        self.wiring = wiring
+
+    def reflect(self, char):
+        return self.wiring[ord(char) - ord(&#x27;A&#x27;)]
+
+class EnigmaMachine:
+    def __init__(self, rotors, reflector):
+        self.rotors = rotors
+        self.reflector = reflector
+
+    def set_rotors(self, positions):
+        for rotor, position in zip(self.rotors, positions):
+            rotor.set_position(position)
+
+    def rotate_rotors(self):
+        turnover = [rotor.rotate() for rotor in self.rotors]
+        return turnover
+
+    def encode_letter(self, letter):
+        for i in range(len(self.rotors)-1, -1, -1):
+            letter = self.rotors[i].forward(letter)
+        letter = self.reflector.reflect(letter)
+        for i in range(1, len(self.rotors)):
+            letter = self.rotors[i].backward(letter)
+        self.rotate_rotors()
+        return letter
+
+    def encode_message(self, message):
+        message = message.upper()
+        encoded_message = []
+        for letter in message:
+            if letter in string.ascii_uppercase:
+                encoded_message.append(self.encode_letter(letter))
+            else:
+                encoded_message.append(letter)
+        return &#x27;&#x27;.join(encoded_message)
+
+# Example usage:
+if __name__ == &quot;__main__&quot;:
+    # Define rotor wirings and turnover notches
+    rotorI = Rotor(&quot;EKMFLGDQVZNTOWYHXUSPAIBRCJ&quot;, &#x27;Q&#x27;)
+    rotorII = Rotor(&quot;AJDKSIRUXBLHWTMCQGZNPYFVOE&quot;, &#x27;E&#x27;)
+    rotorIII = Rotor(&quot;BDFHJLCPRTXVZNYEIWGAKMUSQO&quot;, &#x27;V&#x27;)
+
+    # Define reflector wiring (UKW-B)
+    reflectorB = Reflector(&quot;YRUHQSLDPXNGOKMIEBFZCWVJAT&quot;)
+
+    # Create an Enigma machine with specified rotors and reflector
+    enigma = EnigmaMachine([rotorI, rotorII, rotorIII], reflectorB)
+
+    # Set initial rotor positions (for example: A, A, A)
+    enigma.set_rotors([0, 0, 0])
+
+    # Encrypt a message
+    plaintext = &quot;HELLO WORLD&quot;
+    ciphertext = enigma.encode_message(plaintext)
+    print(f&quot;Plaintext:  {plaintext}&quot;)
+    print(f&quot;Ciphertext: {ciphertext}&quot;)
+
+</code></pre>
+        </details>
+      </article>
+    
+      <article class="code-file block">
+        <span class="block-number">VERSION 02</span>
+        <h2>Four-Rotor GUI Version</h2>
+        <p class="meta">115 lines · Python</p>
+        <div class="code-actions">
+          <a class="button" href="projects/enigma/enigma-gui-4-rotor.py" download>Download file</a>
+          <a class="text-link" href="projects/enigma/enigma-gui-4-rotor.py" target="_blank" rel="noopener">Open raw code</a>
+        </div>
+        <details class="code-viewer">
+          <summary>View source code</summary>
+          <pre><code>
+import string
+import tkinter as tk
+from tkinter import messagebox
+
+class Rotor:
+    def __init__(self, wiring, turnover):
+        self.wiring = wiring
+        self.turnover = turnover
+        self.position = 0
+
+    def set_position(self, position):
+        self.position = position % 26
+
+    def forward(self, char):
+        index = (ord(char) - ord(&#x27;A&#x27;) + self.position) % 26
+        return self.wiring[index]
+
+    def backward(self, char):
+        index = (self.wiring.index(char) - self.position + 26) % 26
+        return chr(index + ord(&#x27;A&#x27;))
+
+    def rotate(self):
+        self.position = (self.position + 1) % 26
+        return self.position == ord(self.turnover) - ord(&#x27;A&#x27;)
+
+class Reflector:
+    def __init__(self, wiring):
+        self.wiring = wiring
+
+    def reflect(self, char):
+        return self.wiring[ord(char) - ord(&#x27;A&#x27;)]
+
+class EnigmaMachine:
+    def __init__(self, rotors, reflector):
+        self.rotors = rotors
+        self.reflector = reflector
+
+    def set_rotors(self, positions):
+        for rotor, position in zip(self.rotors, positions):
+            rotor.set_position(position)
+
+    def rotate_rotors(self):
+        turnover = [rotor.rotate() for rotor in self.rotors]
+        return turnover
+
+    def encode_letter(self, letter):
+        for i in range(len(self.rotors)-1, -1, -1):
+            letter = self.rotors[i].forward(letter)
+        letter = self.reflector.reflect(letter)
+        for i in range(1, len(self.rotors)):
+            letter = self.rotors[i].backward(letter)
+        self.rotate_rotors()
+        return letter
+
+    def encode_message(self, message):
+        message = message.upper()
+        encoded_message = []
+        for letter in message:
+            if letter in string.ascii_uppercase:
+                encoded_message.append(self.encode_letter(letter))
+            else:
+                encoded_message.append(letter)
+        return &#x27;&#x27;.join(encoded_message)
+
+# GUI Implementation
+def encode_text():
+    message = input_text.get(&quot;1.0&quot;, tk.END).strip()
+    if not message:
+        messagebox.showwarning(&quot;Input Error&quot;, &quot;Please enter a message to encode.&quot;)
+        return
+    encoded_message = enigma.encode_message(message)
+    output_text.delete(&quot;1.0&quot;, tk.END)
+    output_text.insert(&quot;1.0&quot;, encoded_message)
+
+def decode_text():
+    message = output_text.get(&quot;1.0&quot;, tk.END).strip()
+    if not message:
+        messagebox.showwarning(&quot;Input Error&quot;, &quot;Please enter a message to decode.&quot;)
+        return
+    decoded_message = enigma.encode_message(message)  # Decoding is just re-encoding
+    input_text.delete(&quot;1.0&quot;, tk.END)
+    input_text.insert(&quot;1.0&quot;, decoded_message)
+
+# Initialize Enigma Machine
+rotorI = Rotor(&quot;EKMFLGDQVZNTOWYHXUSPAIBRCJ&quot;, &#x27;Q&#x27;)
+rotorII = Rotor(&quot;AJDKSIRUXBLHWTMCQGZNPYFVOE&quot;, &#x27;E&#x27;)
+rotorIII = Rotor(&quot;BDFHJLCPRTXVZNYEIWGAKMUSQO&quot;, &#x27;V&#x27;)
+rotorIV = Rotor(&quot;ESOVPZJAYQUIRHXLNFTGKDCMWB&quot;, &#x27;J&#x27;)
+reflectorB = Reflector(&quot;YRUHQSLDPXNGOKMIEBFZCWVJAT&quot;)
+enigma = EnigmaMachine([rotorI, rotorII, rotorIII, rotorIV], reflectorB)
+enigma.set_rotors([0, 0, 0, 0])
+
+# Create GUI window
+root = tk.Tk()
+root.title(&quot;Enigma Cipher&quot;)
+root.geometry(&quot;400x300&quot;)
+
+input_label = tk.Label(root, text=&quot;Enter Text:&quot;)
+input_label.pack()
+input_text = tk.Text(root, height=4, width=50)
+input_text.pack()
+
+encode_button = tk.Button(root, text=&quot;Encode&quot;, command=encode_text)
+encode_button.pack()
+
+decode_button = tk.Button(root, text=&quot;Decode&quot;, command=decode_text)
+decode_button.pack()
+
+output_label = tk.Label(root, text=&quot;Cipher Output:&quot;)
+output_label.pack()
+output_text = tk.Text(root, height=4, width=50)
+output_text.pack()
+
+root.mainloop()
+</code></pre>
+        </details>
+      </article>
+    
+      <article class="code-file block">
+        <span class="block-number">VERSION 03</span>
+        <h2>Corrected Four-Rotor GUI</h2>
+        <p class="meta">200 lines · Python</p>
+        <div class="code-actions">
+          <a class="button" href="projects/enigma/enigma-gui-corrected.py" download>Download file</a>
+          <a class="text-link" href="projects/enigma/enigma-gui-corrected.py" target="_blank" rel="noopener">Open raw code</a>
+        </div>
+        <details class="code-viewer">
+          <summary>View source code</summary>
+          <pre><code>import string
+import tkinter as tk
+from tkinter import messagebox
+
+class Rotor:
+    def __init__(self, wiring, turnover):
+        self.wiring = wiring  # e.g. &quot;EKMFL...&quot;
+        self.turnover = turnover  # e.g. &#x27;Q&#x27;
+        self.position = 0  # 0..25
+
+    def set_position(self, position):
+        self.position = position % 26
+
+    # Forward path through rotor (right-&gt;left)
+    def forward(self, char, pos_override=None):
+        pos = self.position if pos_override is None else pos_override
+        # input index shifted by rotor position
+        idx = (ord(char) - ord(&#x27;A&#x27;) + pos) % 26
+        mapped_char = self.wiring[idx]
+        # unshift by position to produce letter passed to next stage
+        out_index = (ord(mapped_char) - ord(&#x27;A&#x27;) - pos) % 26
+        return chr(out_index + ord(&#x27;A&#x27;))
+
+    # Backward path through rotor (left-&gt;right)
+    def backward(self, char, pos_override=None):
+        pos = self.position if pos_override is None else pos_override
+        # shift input by position
+        effective = (ord(char) - ord(&#x27;A&#x27;) + pos) % 26
+        # find index i such that wiring[i] == chr(effective + &#x27;A&#x27;)
+        target_char = chr(effective + ord(&#x27;A&#x27;))
+        i = self.wiring.index(target_char)
+        out_index = (i - pos) % 26
+        return chr(out_index + ord(&#x27;A&#x27;))
+
+    # rotate the rotor by one step; return True if its notch causes next rotor to step
+    def rotate(self):
+        self.position = (self.position + 1) % 26
+        return self.position == (ord(self.turnover) - ord(&#x27;A&#x27;))
+
+class Reflector:
+    def __init__(self, wiring):
+        self.wiring = wiring
+
+    def reflect(self, char):
+        return self.wiring[ord(char) - ord(&#x27;A&#x27;)]
+
+class EnigmaMachine:
+    def __init__(self, rotors, reflector):
+        self.rotors = rotors  # left..right order
+        self.reflector = reflector
+
+    def set_rotors(self, positions):
+        for rotor, position in zip(self.rotors, positions):
+            rotor.set_position(position)
+
+    # Stepping logic (simplified standard behavior):
+    # - Rightmost rotor always steps.
+    # - If a rotor is at its turnover position BEFORE stepping, it causes the rotor to its left to step too.
+    def rotate_rotors(self):
+        n = len(self.rotors)
+        will_step = [False] * n
+        # rightmost always steps
+        will_step[n-1] = True
+        # check notches from right to left to propagate stepping
+        # if rotor i is currently at its notch, rotor i-1 will step
+        for i in range(n-1, 0, -1):
+            if self.rotors[i].position == (ord(self.rotors[i].turnover) - ord(&#x27;A&#x27;)):
+                will_step[i-1] = True
+        # apply steps
+        for i in range(n):
+            if will_step[i]:
+                self.rotors[i].rotate()
+        return will_step
+
+    # Encode single letter (this mutates rotor positions because Enigma steps on each keypress)
+    def encode_letter(self, letter):
+        # Step rotors first (historical Enigma steps before encipher)
+        self.rotate_rotors()
+
+        # forward through rotors: right -&gt; left
+        ch = letter
+        for i in range(len(self.rotors)-1, -1, -1):
+            ch = self.rotors[i].forward(ch)
+
+        # reflector
+        ch = self.reflector.reflect(ch)
+
+        # backward through rotors: left -&gt; right
+        for i in range(0, len(self.rotors)):
+            ch = self.rotors[i].backward(ch)
+
+        return ch
+
+    # Encode a whole message: preserves initial rotor positions by saving/restoring
+    def encode_message(self, message):
+        # save positions so encode_message is non-destructive (you can set positions and call encode twice)
+        saved_positions = [r.position for r in self.rotors]
+
+        message = message.upper()
+        encoded = []
+        for ch in message:
+            if ch in string.ascii_uppercase:
+                encoded.append(self.encode_letter(ch))
+            else:
+                encoded.append(ch)
+
+        # restore rotor positions
+        for r, p in zip(self.rotors, saved_positions):
+            r.position = p
+
+        return &#x27;&#x27;.join(encoded)
+
+# GUI Implementation
+def parse_positions(text):
+    # Accept &quot;0 0 0 0&quot;, or &quot;A B C D&quot; as letters, or &quot;1,2,3,4&quot;
+    text = text.strip()
+    if not text:
+        return None
+    parts = text.replace(&#x27;,&#x27;, &#x27; &#x27;).split()
+    positions = []
+    for p in parts:
+        if p.isalpha() and len(p) == 1:
+            positions.append((ord(p.upper()) - ord(&#x27;A&#x27;)) % 26)
+        else:
+            try:
+                positions.append(int(p) % 26)
+            except:
+                return None
+    return positions
+
+def encode_text():
+    pos = parse_positions(pos_entry.get())
+    if pos and len(pos) == len(enigma.rotors):
+        enigma.set_rotors(pos)
+    elif pos is not None and len(pos) != len(enigma.rotors):
+        messagebox.showwarning(&quot;Position Error&quot;, f&quot;Enter {len(enigma.rotors)} rotor positions (letters or numbers).&quot;)
+        return
+
+    message = input_text.get(&quot;1.0&quot;, tk.END).strip()
+    if not message:
+        messagebox.showwarning(&quot;Input Error&quot;, &quot;Please enter a message to encode.&quot;)
+        return
+    encoded_message = enigma.encode_message(message)
+    output_text.delete(&quot;1.0&quot;, tk.END)
+    output_text.insert(&quot;1.0&quot;, encoded_message)
+
+def decode_text():
+    pos = parse_positions(pos_entry.get())
+    if pos and len(pos) == len(enigma.rotors):
+        enigma.set_rotors(pos)
+    elif pos is not None and len(pos) != len(enigma.rotors):
+        messagebox.showwarning(&quot;Position Error&quot;, f&quot;Enter {len(enigma.rotors)} rotor positions (letters or numbers).&quot;)
+        return
+
+    message = output_text.get(&quot;1.0&quot;, tk.END).strip()
+    if not message:
+        messagebox.showwarning(&quot;Input Error&quot;, &quot;Please enter a message to decode.&quot;)
+        return
+    # Enigma is symmetric: encoding again with same start positions decodes
+    decoded_message = enigma.encode_message(message)
+    input_text.delete(&quot;1.0&quot;, tk.END)
+    input_text.insert(&quot;1.0&quot;, decoded_message)
+
+# Initialize Enigma Machine (left -&gt; right)
+rotorI = Rotor(&quot;EKMFLGDQVZNTOWYHXUSPAIBRCJ&quot;, &#x27;Q&#x27;)
+rotorII = Rotor(&quot;AJDKSIRUXBLHWTMCQGZNPYFVOE&quot;, &#x27;E&#x27;)
+rotorIII = Rotor(&quot;BDFHJLCPRTXVZNYEIWGAKMUSQO&quot;, &#x27;V&#x27;)
+rotorIV = Rotor(&quot;ESOVPZJAYQUIRHXLNFTGKDCMWB&quot;, &#x27;J&#x27;)
+reflectorB = Reflector(&quot;YRUHQSLDPXNGOKMIEBFZCWVJAT&quot;)
+enigma = EnigmaMachine([rotorI, rotorII, rotorIII, rotorIV], reflectorB)
+enigma.set_rotors([0, 0, 0, 0])
+
+# Create GUI window
+root = tk.Tk()
+root.title(&quot;Enigma Cipher&quot;)
+root.geometry(&quot;520x420&quot;)
+
+input_label = tk.Label(root, text=&quot;Enter Text:&quot;)
+input_label.pack()
+input_text = tk.Text(root, height=6, width=60)
+input_text.pack()
+
+pos_label = tk.Label(root, text=f&quot;Rotor start positions (left-&gt;right). Use letters or numbers, e.g. &#x27;A A A A&#x27; or &#x27;0 0 0 0&#x27;:&quot;)
+pos_label.pack()
+pos_entry = tk.Entry(root, width=30)
+pos_entry.insert(0, &quot;A A A A&quot;)
+pos_entry.pack(pady=(0,10))
+
+encode_button = tk.Button(root, text=&quot;Encode&quot;, command=encode_text)
+encode_button.pack()
+
+decode_button = tk.Button(root, text=&quot;Decode&quot;, command=decode_text)
+decode_button.pack()
+
+output_label = tk.Label(root, text=&quot;Cipher Output:&quot;)
+output_label.pack()
+output_text = tk.Text(root, height=6, width=60)
+output_text.pack()
+
+root.mainloop()
+</code></pre>
+        </details>
+      </article>
+    
+      <article class="code-file block">
+        <span class="block-number">VERSION 04</span>
+        <h2>Ten-Rotor Version</h2>
+        <p class="meta">110 lines · Python</p>
+        <div class="code-actions">
+          <a class="button" href="projects/enigma/enigma-10-rotor.py" download>Download file</a>
+          <a class="text-link" href="projects/enigma/enigma-10-rotor.py" target="_blank" rel="noopener">Open raw code</a>
+        </div>
+        <details class="code-viewer">
+          <summary>View source code</summary>
+          <pre><code>import string
+
+class Rotor:
+    def __init__(self, wiring, turnover):
+        self.wiring = wiring
+        self.turnover = turnover
+        self.position = 0
+
+    def set_position(self, position):
+        self.position = position % 26
+
+    def forward(self, char):
+        index = (ord(char) - ord(&#x27;A&#x27;) + self.position) % 26
+        return self.wiring[index]
+
+    def backward(self, char):
+        index = (self.wiring.index(char) - self.position + 26) % 26
+        return chr(index + ord(&#x27;A&#x27;))
+
+    def rotate(self):
+        self.position = (self.position + 1) % 26
+        return self.position == ord(self.turnover) - ord(&#x27;A&#x27;)
+
+class Reflector:
+    def __init__(self, wiring):
+        self.wiring = wiring
+
+    def reflect(self, char):
+        return self.wiring[ord(char) - ord(&#x27;A&#x27;)]
+
+class EnigmaMachine:
+    def __init__(self, rotors, reflector):
+        self.rotors = rotors
+        self.reflector = reflector
+
+    def set_rotors(self, positions):
+        for rotor, position in zip(self.rotors, positions):
+            rotor.set_position(position)
+
+    def rotate_rotors(self):
+        # Simple cascade stepping
+        rotate_next = self.rotors[-1].rotate()
+        for i in range(len(self.rotors)-2, -1, -1):
+            if rotate_next:
+                rotate_next = self.rotors[i].rotate()
+            else:
+                break
+
+    def encode_letter(self, letter):
+        # Forward through all rotors
+        for i in range(len(self.rotors)-1, -1, -1):
+            letter = self.rotors[i].forward(letter)
+        # Reflect
+        letter = self.reflector.reflect(letter)
+        # Backward through all rotors
+        for i in range(len(self.rotors)):
+            letter = self.rotors[i].backward(letter)
+        # Rotate rotors after processing
+        self.rotate_rotors()
+        return letter
+
+    def encode_message(self, message):
+        message = message.upper()
+        encoded_message = []
+        for letter in message:
+            if letter in string.ascii_uppercase:
+                encoded_message.append(self.encode_letter(letter))
+            else:
+                encoded_message.append(letter)
+        return &#x27;&#x27;.join(encoded_message)
+
+# Example usage
+if __name__ == &quot;__main__&quot;:
+    # Define 10 rotor wirings (unique random permutations of A-Z for realism)
+    rotor_wirings = [
+        &quot;EKMFLGDQVZNTOWYHXUSPAIBRCJ&quot;,  # Rotor I
+        &quot;AJDKSIRUXBLHWTMCQGZNPYFVOE&quot;,  # Rotor II
+        &quot;BDFHJLCPRTXVZNYEIWGAKMUSQO&quot;,  # Rotor III
+        &quot;ESOVPZJAYQUIRHXLNFTGKDCMWB&quot;,  # Rotor IV
+        &quot;VZBRGITYUPSDNHLXAWMJQOFECK&quot;,  # Rotor V
+        &quot;JPGVOUMFYQBENHZRDKASXLICTW&quot;,  # Rotor VI
+        &quot;NZJHGRCXMYSWBOUFAIVLPEKQDT&quot;,  # Rotor VII
+        &quot;FKQHTLXOCBJSPDZRAMEWNIUYGV&quot;,  # Rotor VIII
+        &quot;LEYJVCNIXWPBQMDRTAKZGFUHOS&quot;,  # Rotor IX
+        &quot;FSOKANUERHMBTIYCWLQPZXVGJD&quot;,  # Rotor X
+    ]
+
+    turnovers = [&#x27;Q&#x27;, &#x27;E&#x27;, &#x27;V&#x27;, &#x27;J&#x27;, &#x27;Z&#x27;, &#x27;M&#x27;, &#x27;T&#x27;, &#x27;R&#x27;, &#x27;K&#x27;, &#x27;O&#x27;]
+    rotors = [Rotor(w, t) for w, t in zip(rotor_wirings, turnovers)]
+
+    # Reflector (UKW-B)
+    reflectorB = Reflector(&quot;YRUHQSLDPXNGOKMIEBFZCWVJAT&quot;)
+
+    # Initialize 10-rotor Enigma
+    enigma = EnigmaMachine(rotors, reflectorB)
+
+    # Set initial rotor positions (A=0 for all)
+    enigma.set_rotors([0]*10)
+
+    # Encrypt a message
+    plaintext = &quot;hello this is a test of the new 10 rotor engima amchine that i am making and i want to use it on a xeon phi pcie computer&quot;
+    ciphertext = enigma.encode_message(plaintext)
+    print(f&quot;Plaintext:  {plaintext}&quot;)
+    print(f&quot;Ciphertext: {ciphertext}&quot;)
+
+    # Prove reversibility: decrypt using same settings
+    enigma2 = EnigmaMachine(rotors, reflectorB)
+    enigma2.set_rotors([0]*10)
+    decoded = enigma2.encode_message(ciphertext)
+    print(f&quot;Decoded:    {decoded}&quot;)
+</code></pre>
+        </details>
+      </article>
+    
+      <article class="code-file block">
+        <span class="block-number">VERSION 05</span>
+        <h2>Decoder Example</h2>
+        <p class="meta">24 lines · Python</p>
+        <div class="code-actions">
+          <a class="button" href="projects/enigma/enigma-decoder-example.py" download>Download file</a>
+          <a class="text-link" href="projects/enigma/enigma-decoder-example.py" target="_blank" rel="noopener">Open raw code</a>
+        </div>
+        <details class="code-viewer">
+          <summary>View source code</summary>
+          <pre><code>ciphertext = &quot;QVVQF GROU UQ N KQWF XI YQJ ZNA 10 QFXNV CXLJQM RPTLPFM EWWY G QH XPVDRB FIY M BVVY LQ KGG CF CB M DDPO YFM NEHI WMYJGFSD&quot;
+
+# re-create the same 10 rotors, reflector, and positions as before
+rotor_wirings = [
+    &quot;EKMFLGDQVZNTOWYHXUSPAIBRCJ&quot;,
+    &quot;AJDKSIRUXBLHWTMCQGZNPYFVOE&quot;,
+    &quot;BDFHJLCPRTXVZNYEIWGAKMUSQO&quot;,
+    &quot;ESOVPZJAYQUIRHXLNFTGKDCMWB&quot;,
+    &quot;VZBRGITYUPSDNHLXAWMJQOFECK&quot;,
+    &quot;JPGVOUMFYQBENHZRDKASXLICTW&quot;,
+    &quot;NZJHGRCXMYSWBOUFAIVLPEKQDT&quot;,
+    &quot;FKQHTLXOCBJSPDZRAMEWNIUYGV&quot;,
+    &quot;LEYJVCNIXWPBQMDRTAKZGFUHOS&quot;,
+    &quot;FSOKANUERHMBTIYCWLQPZXVGJD&quot;
+]
+turnovers = [&#x27;Q&#x27;,&#x27;E&#x27;,&#x27;V&#x27;,&#x27;J&#x27;,&#x27;Z&#x27;,&#x27;M&#x27;,&#x27;T&#x27;,&#x27;R&#x27;,&#x27;K&#x27;,&#x27;O&#x27;]
+rotors = [Rotor(w, t) for w, t in zip(rotor_wirings, turnovers)]
+reflectorB = Reflector(&quot;YRUHQSLDPXNGOKMIEBFZCWVJAT&quot;)
+
+enigma = EnigmaMachine(rotors, reflectorB)
+enigma.set_rotors([0]*10)   # &lt;-- must match your original starting positions
+
+decoded = enigma.encode_message(ciphertext)
+print(&quot;Decoded message:&quot;, decoded)</code></pre>
+        </details>
+      </article>
+    
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-heading">Project notes</h2>
+    <div class="grid-2">
+      <article class="block">
+        <h3>Core design</h3>
+        <p>The programs define rotor, reflector, and Enigma-machine classes and process letters through forward rotor paths, a reflector, and reverse rotor paths.</p>
+      </article>
+      <article class="block">
+        <h3>Development path</h3>
+        <p>The uploaded versions include command-line and Tkinter GUI implementations, rotor-position controls, revised stepping behavior, expanded rotor counts, and a separate decoding example.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<button class="back-to-top" type="button" aria-label="Back to top">↑</button>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a href="portfolio.html">Back to projects</a>
+    <span>© <span data-year></span></span>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

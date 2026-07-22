@@ -59,3 +59,30 @@ To change project filters, edit `portfolio.html`. Each project card uses a
 ```
 
 A card may have more than one category separated by spaces.
+
+
+## Enigma project files
+
+The Enigma card on `portfolio.html` links to `enigma.html`.
+
+The source files are stored in:
+
+```text
+projects/enigma/
+```
+
+Visitors can expand each source-code viewer, open the raw Python file in a new tab,
+or download the file directly.
+
+
+## TrueNAS hardware project
+
+The Hardware Experiments card links to `truenas.html`.
+
+The original Word project guide is included at:
+
+```text
+projects/hardware/truenas-ga-ep45-ds4p-project-guide.docx
+```
+
+Visitors can read the summarized project page and download the full guide.

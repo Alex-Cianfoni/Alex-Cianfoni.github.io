@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GA-EP45-DS4P TrueNAS server project using IDE, SATA, NVMe, ZFS, and upgraded networking.">
+  <title>Portfolio — TrueNAS Hardware Project</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="site-title" href="index.html">Portfolio · 2026</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">
+      <span class="menu-toggle-text">Menu</span>
+      <span class="menu-toggle-icon" aria-hidden="true"></span>
+    </button>
+    <nav class="site-nav" id="site-navigation" aria-label="Main navigation">
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="portfolio.html">Work</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="lab.html">Lab</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="page">
+  <section class="section">
+    <p class="kicker">Hardware / Storage / Networking</p>
+    <h1 class="page-title">TrueNAS Build</h1>
+  </section>
+
+  <section class="section">
+    <p class="statement">
+      A maximum-use NAS project built around the Gigabyte GA-EP45-DS4P,
+      combining legacy IDE storage, six SATA devices, PCIe NVMe storage,
+      ZFS redundancy, and upgraded networking.
+    </p>
+
+    <div class="document-actions">
+      <a class="button" href="projects/hardware/truenas-ga-ep45-ds4p-project-guide.docx" download>
+        Download full project guide
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-heading">System plan</h2>
+    <div class="grid-2">
+      <article class="block">
+        <span class="block-number">SYSTEM 01</span>
+        <h2>Core Platform</h2>
+        <ul class="list-plain compact-list">
+          <li>Gigabyte GA-EP45-DS4P motherboard</li>
+          <li>Intel Core 2 Quad processor</li>
+          <li>About 7.5–8 GB DDR2 installed</li>
+          <li>Preferred memory target: 16 GB</li>
+          <li>TrueNAS SCALE operating system</li>
+        </ul>
+      </article>
+
+      <article class="block">
+        <span class="block-number">SYSTEM 02</span>
+        <h2>Primary Objective</h2>
+        <p>
+          Use the board's IDE, SATA, and PCIe expansion capabilities while
+          separating slow archive storage, primary storage, and faster NVMe
+          workloads into independent ZFS pools.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-heading">Storage architecture</h2>
+    <div class="grid-2">
+      <article class="block">
+        <span class="block-number">POOL 01</span>
+        <h2>ArchivePool</h2>
+        <p>Two IDE/PATA hard drives configured as a ZFS mirror.</p>
+        <p class="meta">Cold storage / Backups</p>
+      </article>
+
+      <article class="block">
+        <span class="block-number">POOL 02</span>
+        <h2>MainPool</h2>
+        <p>Six motherboard SATA drives configured as three mirrors or RAIDZ2.</p>
+        <p class="meta">Primary SMB / NFS storage</p>
+      </article>
+
+      <article class="block">
+        <span class="block-number">POOL 03</span>
+        <h2>FastPool</h2>
+        <p>Four NVMe drives on a compatible PCIe adapter, arranged as two striped mirrors.</p>
+        <p class="meta">VMs / Scratch space / Fast shares</p>
+      </article>
+
+      <article class="block">
+        <span class="block-number">POOL 04</span>
+        <h2>Auxiliary NVMe</h2>
+        <p>
+          One additional NVMe device reserved for testing as SLOG or L2ARC only
+          after measuring the actual workload.
+        </p>
+        <p class="meta">Experimental cache / Log role</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-heading">Network design</h2>
+    <div class="grid-2">
+      <article class="block">
+        <h2>Dual Gigabit Ethernet</h2>
+        <p>
+          The two onboard 1 GbE ports can be combined using LACP for redundancy
+          and greater total throughput across multiple clients.
+        </p>
+        <p class="meta">About 220–240 MB/s aggregate across multiple clients</p>
+      </article>
+
+      <article class="block">
+        <h2>10 Gigabit Upgrade</h2>
+        <p>
+          A supported 10 GbE adapter is the practical path to approximately
+          300 MB/s or more from one workstation, assuming the storage and CPU
+          can keep up.
+        </p>
+        <p class="meta">Higher single-client performance</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-heading">Major engineering challenges</h2>
+    <div class="grid-2">
+      <article class="block">
+        <h2>NVMe Compatibility</h2>
+        <p>
+          A passive four-drive M.2 adapter normally requires PCIe bifurcation.
+          This older platform may need a more expensive PCIe-switch-based adapter
+          to expose all four NVMe drives.
+        </p>
+      </article>
+
+      <article class="block">
+        <h2>Boot Device Conflict</h2>
+        <p>
+          Using all six SATA ports for MainPool leaves no onboard SATA port for
+          the TrueNAS boot SSD. The design must use a USB-attached SSD, reserve a
+          SATA port, or add a supported storage controller.
+        </p>
+      </article>
+
+      <article class="block">
+        <h2>Memory Before Cache</h2>
+        <p>
+          The guide recommends upgrading to 16 GB of RAM before adding L2ARC or
+          using NVMe as a substitute for memory.
+        </p>
+      </article>
+
+      <article class="block">
+        <h2>Cooling and Power</h2>
+        <p>
+          The full drive plan needs a quality 600–700 W power supply, sufficient
+          connectors, direct airflow over NVMe adapters, and careful cable routing.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-heading">Build sequence</h2>
+    <ol class="numbered-process">
+      <li>Inventory and label every drive, cable, and bay.</li>
+      <li>Upgrade and fully test the DDR2 memory.</li>
+      <li>Service CPU cooling and improve case airflow.</li>
+      <li>Install the power supply and verify connector capacity.</li>
+      <li>Connect and test the mirrored IDE archive drives.</li>
+      <li>Install the six SATA data drives in AHCI mode.</li>
+      <li>Test the quad-NVMe adapter one drive at a time.</li>
+      <li>Add the auxiliary NVMe only after the system is stable.</li>
+      <li>Install TrueNAS SCALE on a dedicated boot device.</li>
+      <li>Create pools, datasets, shares, snapshots, and replication jobs.</li>
+    </ol>
+  </section>
+
+  <section class="section">
+    <h2 class="section-heading">Validation goals</h2>
+    <ul class="list-plain project-checklist">
+      <li>Memtest completes without errors.</li>
+      <li>Every drive is detected with the correct model and serial number.</li>
+      <li>SMART tests and ZFS scrubs complete successfully.</li>
+      <li>NVMe temperatures stay controlled under sustained writes.</li>
+      <li>One 1 GbE connection reaches roughly 110–120 MB/s.</li>
+      <li>Multiple clients can use the LACP link simultaneously.</li>
+      <li>Snapshots, replication, and test restores work correctly.</li>
+      <li>The TrueNAS configuration is backed up outside the server.</li>
+    </ul>
+  </section>
+</main>
+
+<button class="back-to-top" type="button" aria-label="Back to top">↑</button>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a href="portfolio.html">Back to projects</a>
+    <span>© <span data-year></span></span>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

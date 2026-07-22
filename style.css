@@ -806,3 +806,140 @@ body.page-leaving {
     width: 100%;
   }
 }
+
+
+/* ================================================================
+   ENIGMA PROJECT / SOURCE-CODE VIEWER
+================================================================ */
+
+.project-link {
+  min-width: 0;
+  margin-top: 8px;
+  padding: 8px 14px;
+  font-size: .9rem;
+}
+
+.code-file-grid {
+  display: grid;
+  gap: 28px;
+}
+
+.code-file {
+  min-height: 0;
+}
+
+.code-actions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.text-link {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.code-viewer {
+  position: relative;
+  margin-top: 20px;
+  border: 1px solid var(--gilt);
+  background: var(--oak-dark);
+}
+
+.code-viewer summary {
+  padding: 14px 18px;
+  color: var(--paper);
+  background: var(--wine-dark);
+  border-bottom: 1px solid transparent;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.code-viewer[open] summary {
+  border-bottom-color: var(--gilt);
+}
+
+.code-viewer pre {
+  max-height: 680px;
+  margin: 0;
+  padding: 22px;
+  overflow: auto;
+  color: #f2ead8;
+  background: #20150f;
+  font: .88rem/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  tab-size: 4;
+  white-space: pre;
+}
+
+.code-viewer code {
+  font: inherit;
+}
+
+@media (max-width: 540px) {
+  .code-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .code-actions .button {
+    width: 100%;
+  }
+
+  .code-viewer pre {
+    font-size: .78rem;
+    padding: 15px;
+  }
+}
+
+
+/* ================================================================
+   TRUENAS HARDWARE PROJECT
+================================================================ */
+
+.document-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.numbered-process {
+  margin: 0;
+  padding-left: 1.6rem;
+  counter-reset: build-step;
+}
+
+.numbered-process li {
+  margin: 0;
+  padding: 18px 0 18px 12px;
+  border-top: 1px solid var(--line);
+}
+
+.numbered-process li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.numbered-process li::marker {
+  color: var(--wine);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 700;
+}
+
+.project-checklist li::before {
+  content: "◇";
+  margin-right: 12px;
+  color: var(--gilt);
+}
+
+@media (max-width: 540px) {
+  .document-actions .button {
+    width: 100%;
+  }
+}
