@@ -1,3 +1,15 @@
+/* ================================================================
+   AQUitania-INSPIRED PORTFOLIO — STYLE GUIDE
+
+   Most content should be edited in the HTML files, not here.
+   Use this file when you want to change colors, fonts, spacing,
+   borders, or the overall appearance.
+
+   QUICK COLOR EDITING:
+   Change the values under :root below.
+   Example: --wine controls the main red accent.
+================================================================ */
+
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Libre+Baskerville:wght@400;700&display=swap');
 
 :root {
@@ -424,4 +436,78 @@ a:focus { color: var(--wine); }
   .hero::before { left: 20px; top: 20px; }
   .hero::after { right: 20px; bottom: 20px; }
   .block { min-height: auto; }
+}
+
+/* Additional content components */
+.site-nav a[aria-current="page"] {
+  color: var(--gilt-light);
+  border-bottom-color: var(--gilt-light);
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(230px, .75fr) 1.5fr;
+  gap: 42px;
+  align-items: center;
+}
+
+.portrait-panel {
+  min-height: 390px;
+  display: grid;
+  place-items: center;
+  color: var(--wine-dark);
+  background:
+    linear-gradient(rgba(251,247,237,.72), rgba(236,229,211,.82)),
+    repeating-linear-gradient(90deg, transparent 0 64px, rgba(176,138,67,.16) 64px 66px);
+  border: 1px solid var(--gilt);
+  outline: 6px double var(--oak);
+  outline-offset: -17px;
+}
+
+.portrait-panel span {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(5rem, 10vw, 8rem);
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.left-heading { text-align: left; }
+.left-heading::before,
+.left-heading::after { display: none; }
+
+.skill-list { max-width: 900px; margin: 0 auto; }
+.skill { margin: 24px 0; }
+.skill-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 8px;
+  color: var(--wine-dark);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.skill-track {
+  height: 13px;
+  padding: 2px;
+  border: 1px solid var(--gilt);
+  background: rgba(91,57,38,.08);
+}
+.skill-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--wine-dark), var(--wine), var(--gilt));
+}
+
+.project-grid .block { min-height: 280px; }
+.project-block .block-number { color: var(--wine); }
+.compact-list li { padding: 9px 0; }
+
+@media (max-width: 850px) {
+  .about-layout { grid-template-columns: 1fr; }
+  .portrait-panel { min-height: 300px; }
+  .left-heading { text-align: center; }
+  .left-heading::before,
+  .left-heading::after { display: block; }
 }

@@ -3,15 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A minimal technology and cybersecurity portfolio.">
+
+  <!-- EDIT HERE: This description may appear in search-engine results. -->
+  <meta name="description" content="A technology and cybersecurity portfolio.">
+
+  <!-- EDIT HERE: Change the browser-tab title. -->
   <title>Portfolio — Home</title>
+
+  <!-- Keep this line so the Aquitania-inspired design loads. -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
+
+<!-- =========================
+     SITE HEADER / NAVIGATION
+     Edit the site title or menu labels here.
+     Keep the file names in href="..." unless you rename the HTML files.
+========================= -->
 <header class="site-header">
   <div class="header-inner">
+    <!-- EDIT HERE: Main site name shown in the upper-left corner. -->
     <a class="site-title" href="index.html">Portfolio · 2026</a>
+
     <nav class="site-nav" aria-label="Main navigation">
       <ul>
         <li><a href="about.html">About</a></li>
@@ -22,45 +36,92 @@
     </nav>
   </div>
 </header>
+
 <main id="main" class="page">
+  <!-- =========================
+       HOME HERO SECTION
+       This is the first large section visitors see.
+  ========================= -->
   <section class="hero">
+    <!-- EDIT HERE: Small line above the main title. -->
     <p class="kicker">Technology / Security / Systems</p>
+
+    <!-- EDIT HERE: Main homepage title. <br> creates a line break. -->
     <h1>My<br>Portfolio</h1>
-    <p class="hero-copy">A direct record of technical work, experiments, systems, and ongoing research.</p>
+
+    <!-- EDIT HERE: Short introduction. -->
+    <p class="hero-copy">A record of technical work, cybersecurity labs, systems, hardware, and ongoing research.</p>
+
+    <!-- EDIT HERE: Change button text or destinations. -->
     <div class="actions">
       <a class="button" href="portfolio.html">View work</a>
-      <a class="button" href="about.html">About</a>
+      <a class="button" href="about.html">About me</a>
     </div>
   </section>
 
+  <!-- =========================
+       FEATURED AREAS
+       Copy one complete <article>...</article> block to add another card.
+  ========================= -->
   <section class="section">
-    <h2 class="section-heading">Selected areas</h2>
+    <!-- EDIT HERE: Section heading. -->
+    <h2 class="section-heading">Featured areas</h2>
+
     <div class="grid-3">
+      <!-- FEATURE CARD 1 -->
       <article class="block">
         <span class="block-number">01</span>
         <h3>Cybersecurity</h3>
-        <p>Hands-on work with networks, systems, analysis, and defensive tools.</p>
+        <p>Hands-on work with networks, systems, vulnerability analysis, and defensive tools.</p>
       </article>
+
+      <!-- FEATURE CARD 2 -->
       <article class="block">
         <span class="block-number">02</span>
         <h3>Infrastructure</h3>
-        <p>Home lab systems, virtualization, storage, Linux, and hardware.</p>
+        <p>Home-lab systems, virtualization, storage, Linux, Windows, and hardware.</p>
       </article>
+
+      <!-- FEATURE CARD 3 -->
       <article class="block">
         <span class="block-number">03</span>
         <h3>Research</h3>
-        <p>Experiments involving automation, machine learning, and security.</p>
+        <p>Experiments involving automation, machine learning, cryptography, and security.</p>
       </article>
+
+      <!-- ADD A NEW FEATURE CARD:
+      <article class="block">
+        <span class="block-number">04</span>
+        <h3>New Area</h3>
+        <p>Add a short description here.</p>
+      </article>
+      -->
     </div>
   </section>
 
+  <!-- =========================
+       CLOSING STATEMENT
+  ========================= -->
   <section class="section">
-    <p class="statement">A restrained portfolio framed by the elegance, symmetry, and craftsmanship of a grand Atlantic liner.</p>
+    <!-- EDIT HERE: Closing sentence on the homepage. -->
+    <p class="statement">A technical portfolio framed by the elegance, symmetry, and craftsmanship of a grand Atlantic liner.</p>
   </section>
 </main>
+
+<!-- =========================
+     FOOTER
+========================= -->
 <footer class="site-footer">
-  <div class="footer-inner"><span>A portfolio in the spirit of the Ship Beautiful</span><span>© <span data-year></span></span></div>
+  <div class="footer-inner">
+    <!-- EDIT HERE: Footer phrase. -->
+    <span>A portfolio in the spirit of the Ship Beautiful</span>
+
+    <!-- The year is filled automatically by js/script.js. -->
+    <span>© <span data-year></span></span>
+  </div>
 </footer>
+
+<!-- Keep this line so the automatic copyright year works. -->
 <script src="js/script.js"></script>
 </body>
 </html>

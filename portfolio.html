@@ -1,16 +1,109 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Portfolio — Work</title><link rel="stylesheet" href="style.css"></head>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- EDIT HERE: Browser-tab title. -->
+  <title>Portfolio — Projects</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><div class="header-inner"><a class="site-title" href="index.html">Portfolio · 2026</a><nav class="site-nav" aria-label="Main navigation"><ul><li><a href="about.html">About</a></li><li><a href="portfolio.html">Work</a></li><li><a href="resume.html">Resume</a></li><li><a href="lab.html">Lab</a></li></ul></nav></div></header>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="site-title" href="index.html">Portfolio · 2026</a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="portfolio.html">Work</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="lab.html">Lab</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
 <main id="main" class="page">
-<section class="section"><p class="kicker">Selected work</p><h1 class="page-title">Projects</h1></section>
-<section class="section"><div class="grid-2">
-<article class="block"><span class="block-number">PROJECT 01</span><h2>Home Lab</h2><p>Virtual machines, storage, networking, monitoring, and system testing.</p><p class="meta">Infrastructure / Networking</p></article>
-<article class="block"><span class="block-number">PROJECT 02</span><h2>Security Lab</h2><p>A controlled environment for vulnerability assessment and defensive practice.</p><p class="meta">Security / Analysis</p></article>
-<article class="block"><span class="block-number">PROJECT 03</span><h2>Encryption Tool</h2><p>A custom cipher and rotor-machine experiment built to explore cryptography.</p><p class="meta">Programming / Cryptography</p></article>
-<article class="block"><span class="block-number">PROJECT 04</span><h2>Storage Server</h2><p>A storage-focused system for backups, data organization, and experimentation.</p><p class="meta">Servers / Storage</p></article>
-</div></section>
+  <!-- PAGE TITLE -->
+  <section class="section">
+    <p class="kicker">Selected technical work</p>
+    <h1 class="page-title">Projects</h1>
+  </section>
+
+  <!-- =========================
+       PROJECT GRID
+       Copy one complete <article class="block">...</article> section
+       and paste it inside .grid-2 to add a project.
+  ========================= -->
+  <section class="section">
+    <div class="grid-2">
+      <!-- PROJECT 01 -->
+      <article class="block">
+        <span class="block-number">PROJECT 01</span>
+        <h2>Virtual Network Lab</h2>
+        <p>A segmented virtual network using firewalls, NAT, DHCP, routing, and multiple operating systems.</p>
+        <p class="meta">Infrastructure / Networking</p>
+      </article>
+
+      <!-- PROJECT 02 -->
+      <article class="block">
+        <span class="block-number">PROJECT 02</span>
+        <h2>Web Security Testing</h2>
+        <p>Security testing using vulnerability scanners, exploitation tools, and intentionally vulnerable systems.</p>
+        <p class="meta">Cybersecurity / Analysis</p>
+      </article>
+
+      <!-- PROJECT 03 -->
+      <article class="block">
+        <span class="block-number">PROJECT 03</span>
+        <h2>Cryptography Tools</h2>
+        <p>Programs and exercises exploring classical ciphers, RSA, AES, number theory, and encryption concepts.</p>
+        <p class="meta">Programming / Cryptography</p>
+      </article>
+
+      <!-- PROJECT 04 -->
+      <article class="block">
+        <span class="block-number">PROJECT 04</span>
+        <h2>Home Server Lab</h2>
+        <p>Storage, virtualization, backups, and network services built with repurposed computer hardware.</p>
+        <p class="meta">Servers / Storage</p>
+      </article>
+
+      <!-- PROJECT 05 -->
+      <article class="block">
+        <span class="block-number">PROJECT 05</span>
+        <h2>Custom Enigma Simulator</h2>
+        <p>A configurable encryption simulator featuring multiple rotors, ring settings, and plugboard options.</p>
+        <p class="meta">Software / Encryption</p>
+      </article>
+
+      <!-- PROJECT 06 -->
+      <article class="block">
+        <span class="block-number">PROJECT 06</span>
+        <h2>Hardware Experiments</h2>
+        <p>Hands-on projects involving legacy computers, single-board systems, component upgrades, and diagnostics.</p>
+        <p class="meta">Hardware / Systems</p>
+      </article>
+
+      <!-- ADD A NEW PROJECT:
+      <article class="block">
+        <span class="block-number">PROJECT 07</span>
+        <h2>Project Name</h2>
+        <p>Describe what you built, what problem it solves, and which tools you used.</p>
+        <p class="meta">Category / Technology</p>
+      </article>
+      -->
+    </div>
+  </section>
 </main>
-<footer class="site-footer"><div class="footer-inner"><a href="index.html">Home</a><span>© <span data-year></span></span></div></footer><script src="js/script.js"></script>
-</body></html>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a href="index.html">Home</a>
+    <span>© <span data-year></span></span>
+  </div>
+</footer>
+<script src="js/script.js"></script>
+</body>
+</html>
