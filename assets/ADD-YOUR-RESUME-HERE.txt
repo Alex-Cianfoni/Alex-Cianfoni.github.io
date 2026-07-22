@@ -1,0 +1,10 @@
+RENAME YOUR RESUME FILE TO:
+
+resume.pdf
+
+Then place it inside this assets folder.
+
+Correct location:
+assets/resume.pdf
+
+The Resume page is already linked to that exact file.

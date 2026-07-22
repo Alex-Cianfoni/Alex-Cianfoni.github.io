@@ -943,3 +943,192 @@ body.page-leaving {
     width: 100%;
   }
 }
+
+
+/* ================================================================
+   AQUitania-STYLE RÉSUMÉ DOWNLOAD PAGE
+================================================================ */
+
+.resume-download-page {
+  max-width: 1020px;
+}
+
+.resume-title-panel {
+  text-align: center;
+}
+
+.resume-document-panel {
+  padding: 54px;
+  background:
+    linear-gradient(rgba(251, 247, 237, .96), rgba(239, 231, 211, .94)),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 90px,
+      rgba(176, 138, 67, .12) 90px 92px
+    );
+}
+
+.resume-document-frame {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(42px, 8vw, 76px);
+  text-align: center;
+  background: rgba(251, 247, 237, .82);
+  border: 1px solid var(--gilt);
+  outline: 7px double var(--oak);
+  outline-offset: -19px;
+  box-shadow: 0 18px 42px rgba(47, 27, 18, .14);
+}
+
+.resume-document-frame::before,
+.resume-document-frame::after {
+  content: "";
+  position: absolute;
+  width: 76px;
+  height: 76px;
+  pointer-events: none;
+}
+
+.resume-document-frame::before {
+  top: 28px;
+  left: 28px;
+  border-top: 3px double var(--gilt);
+  border-left: 3px double var(--gilt);
+}
+
+.resume-document-frame::after {
+  right: 28px;
+  bottom: 28px;
+  border-right: 3px double var(--gilt);
+  border-bottom: 3px double var(--gilt);
+}
+
+.resume-crest {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 27px;
+  color: var(--paper);
+  background: var(--wine-dark);
+  border: 2px solid var(--gilt-light);
+  outline: 1px solid var(--wine-dark);
+  outline-offset: 5px;
+  transform: rotate(45deg);
+}
+
+.resume-crest span {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  transform: rotate(-45deg);
+}
+
+.resume-document-frame h2 {
+  position: relative;
+  margin: 0;
+  color: var(--wine-dark);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.7rem, 6vw, 4.6rem);
+  line-height: 1;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.resume-introduction {
+  position: relative;
+  max-width: 600px;
+  margin: 28px auto 0;
+  color: var(--oak);
+  font-size: 1.08rem;
+}
+
+.resume-divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 30px auto;
+  color: var(--gilt);
+}
+
+.resume-divider::before,
+.resume-divider::after {
+  content: "";
+  width: min(150px, 28vw);
+  height: 1px;
+  background: var(--gilt);
+}
+
+.resume-document-actions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+}
+
+.resume-download-button {
+  color: var(--wine-dark);
+  background: var(--gilt-light);
+}
+
+.resume-download-button:hover,
+.resume-download-button:focus {
+  color: var(--paper);
+  background: var(--wine-dark);
+}
+
+.resume-document-note {
+  position: relative;
+  margin: 27px 0 0;
+  color: var(--oak);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: .95rem;
+  font-style: italic;
+  letter-spacing: .06em;
+}
+
+@media (max-width: 650px) {
+  .resume-document-panel {
+    padding: 30px 16px;
+  }
+
+  .resume-document-frame {
+    padding: 54px 27px;
+    outline-offset: -13px;
+  }
+
+  .resume-document-frame::before,
+  .resume-document-frame::after {
+    width: 48px;
+    height: 48px;
+  }
+
+  .resume-document-frame::before {
+    top: 20px;
+    left: 20px;
+  }
+
+  .resume-document-frame::after {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .resume-document-actions {
+    flex-direction: column;
+  }
+
+  .resume-document-actions .button {
+    width: 100%;
+  }
+
+  .resume-crest {
+    width: 76px;
+    height: 76px;
+  }
+}

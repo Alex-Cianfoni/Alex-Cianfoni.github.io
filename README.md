@@ -86,3 +86,16 @@ projects/hardware/truenas-ga-ep45-ds4p-project-guide.docx
 ```
 
 Visitors can read the summarized project page and download the full guide.
+
+
+## Adding your résumé PDF
+
+1. Rename your résumé file to `resume.pdf`.
+2. Place it in the `assets` folder.
+3. The final path must be:
+
+```text
+assets/resume.pdf
+```
+
+The Résumé page already includes buttons to view and download this document.
